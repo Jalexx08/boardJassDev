@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/registerUser", async (req, res) => {
 	let user = await User.findOne({ email: req.body.email });
 
-	if (user) return res.status(200).send("Usuario ya exite");
+	if (user) return res.status(200).send("Usuario ya existe");
 
 	const hash = await bcrypt.hash(req.body.password, 10);
 
