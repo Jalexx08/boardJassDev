@@ -1,11 +1,14 @@
+//* Express
 const express = require("express");
-const bcrypt = require("bcrypt");
-
-const User = require("../models/user");
-
 const router = express.Router();
 
+//* Libraries
+const bcrypt = require("bcrypt");
 
+//* Models
+const User = require("../models/user");
+
+//* Login user
 router.post("/login", async( req, res ) => {
 
     const user = await User.findOne({ email: req.body.email});

@@ -1,5 +1,7 @@
+//* Libraries
 const jwt = require("jsonwebtoken");
 
+//* Autentication middlewares
 const auth = (req, res, next) => {
     let jwtToken = req.header("Authorization");
 

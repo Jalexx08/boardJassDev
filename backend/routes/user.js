@@ -1,10 +1,15 @@
+//*Express
 const express = require("express");
-const User = require("../models/user");
-const bcrypt = require("bcrypt");
-const USer = require("../models/user");
-
 const router = express.Router();
 
+//* Libraries
+const bcrypt = require("bcrypt");
+
+//* Models
+const User = require("../models/user");
+
+
+//* Resgister user
 router.post("/registerUser", async (req, res) => {
 	let user = await User.findOne({ email: req.body.email });
 
@@ -18,7 +23,9 @@ router.post("/registerUser", async (req, res) => {
 		password: hash,
 	});
 
+	//* Saving in MongoDB
 	const result = await user.save();
+
 	if (result) {
 		const jwtToken = user.generateJWT();
 		res.status(200).send({ jwtToken });

@@ -1,11 +1,15 @@
+//* Express
 const express = require("express");
-
-const Board = require("../models/board");
-const User = require("../models/user");
-const Auth = require("../middleware/auth");
-
 const router = express.Router();
 
+//* Models
+const Board = require("../models/board");
+const User = require("../models/user");
+
+//* middlewares
+const Auth = require("../middleware/auth");
+
+//* Register tasks by user
 router.post("/saveTask", Auth, async(req, res )=> {
     
     const user = await User.findById(req.user._id);
@@ -19,6 +23,7 @@ router.post("/saveTask", Auth, async(req, res )=> {
         status: "to-do"
     });
 
+    //* Saving in mongoDB
     const result = await board.save();
     return res.status(200).send( { result });
 

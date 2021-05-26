@@ -1,8 +1,9 @@
+//* Libraries
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const moment = require ("moment");
 
-
+//* Schema
 const userSchema = new mongoose.Schema({
     name:String,
     email:String,
@@ -11,6 +12,7 @@ const userSchema = new mongoose.Schema({
 
 });
 
+//* Generating JWT by user
 userSchema.methods.generateJWT = function() {
     return jwt.sign({
         _id: this._id,
@@ -18,8 +20,7 @@ userSchema.methods.generateJWT = function() {
         iat:moment().unix(),
     }, "jassDevMySecret")
 }
-
+//* Creating Collection user
 const User = mongoose.model( "user", userSchema);
-
 
 module.exports = User;

@@ -1,6 +1,7 @@
+//* Libraries
 const mongoose = require("mongoose");
 
-
+//* Schema
 const boardSchema = new mongoose.Schema({
     userId: String,
     name: String,
@@ -10,6 +11,7 @@ const boardSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now}
 });
 
+//* Creating Collection board
 const Board = mongoose.model("board", boardSchema);
 
 module.exports = Board;
