@@ -5,11 +5,11 @@ const jwt = require("jsonwebtoken");
 const auth = (req, res, next) => {
     let jwtToken = req.header("Authorization");
 
-    if(!jwtToken) return res.status(401).send("Autorización denegada: No hay token1");
+    if(!jwtToken) return res.status(401).send("Autorización denegada: No hay token");
 
     jwtToken = jwtToken.split(" ")[1];
 
-    if(!jwtToken) return res.status(401).send("Autorización denegada: No hay token2");
+    if(!jwtToken) return res.status(401).send("Autorización denegada: No hay token");
 
     try {
         const payload = jwt.verify( jwtToken, "jassDevMySecret");
@@ -17,7 +17,7 @@ const auth = (req, res, next) => {
         next();
     } catch (error) {
 
-        return res.status(401).send("Autorización denegada: Token no válido")
+        return res.status(401).send("Autorización denegada: Token no válido");
         
     }
 
