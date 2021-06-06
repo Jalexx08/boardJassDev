@@ -1,32 +1,27 @@
 //* Express
 const express = require("express");
 const app = express();
+const cors = require("cors");
+require ("dotenv").config();
+const { dbConnection } = require('./db/db');
 
-//*Libraries
-const mongoose = require("mongoose");
 
 //* Routes
-const User = require("./routes/user");
 const Auth = require("./routes/auth");
 const Board = require("./routes/board");
+const User = require("./routes/user");
+const Role = require('./routes/role');
 
 //* Middlewares
 app.use(express.json());
+app.use(cors());
 app.use("/api/auth/", Auth);
-app.use("/api/user/", User);
 app.use("/api/board/", Board);
+app.use("/api/role/", Role);
+app.use("/api/user/", User);
 
-//* Ports
-const port = process.env.PORT || 3002;
-app.listen(port, () => console.log("Escuhando servidor en puerto: " + port));
+//* Ports;
+app.listen(process.env.PORT, () => console.log("Server listening at port: " + process.env.PORT));
 
 //* Connecting to MongoDB
-mongoose
-	.connect("mongodb://127.0.0.1:27017/bdjassdev", {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useFindAndModify: false,
-		useCreateIndex: true,
-	})
-	.then(() => console.log("Conexion MongoDB activa"))
-	.catch((err) => console.log("Error al conectar con MongoDB", err));
+dbConnection();

@@ -2,25 +2,24 @@
 const jwt = require("jsonwebtoken");
 
 //* Autentication middlewares
-const auth = (req, res, next) => {
-    let jwtToken = req.header("Authorization");
+const auth = async(req, res, next) => {
+	let jwtToken = req.header("Authorization");
 
-    if(!jwtToken) return res.status(401).send("Autorización denegada: No hay token");
+	if (!jwtToken)
+		return res.status(401).send("Authorization denied: no token");
 
-    jwtToken = jwtToken.split(" ")[1];
+	jwtToken = jwtToken.split(" ")[1];
 
-    if(!jwtToken) return res.status(401).send("Autorización denegada: No hay token");
+	if (!jwtToken)
+		return res.status(401).send("Authorization denied: no token");
 
-    try {
-        const payload = jwt.verify( jwtToken, "jassDevMySecret");
-        req.user = payload;
-        next();
-    } catch (error) {
-
-        return res.status(401).send("Autorización denegada: Token no válido");
-        
-    }
-
+	try {
+		const payload = await jwt.verify(jwtToken, process.env.SECRET_kEY_JWT);
+		req.user = payload;
+		next();
+	} catch (error) {
+		return res.status(401).send("Authorization denied: invalid token");
+	}
 };
 
 module.exports = auth;

@@ -13,3 +13,7 @@ Creating a server ExpressJs and MongoDB
 * Mongoose
 * Bcrypt
 * Jsonwebtoken
+* Dotenv
+* Moment
+* Connect multipary
+* Cors

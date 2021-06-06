@@ -13,11 +13,11 @@ router.post("/login", async( req, res ) => {
 
     const user = await User.findOne({ email: req.body.email});
 
-    if(!user) return res.status(400).send("El email o password no coinciden");
+    if(!user) return res.status(400).send("Email or password not match");
 
     const hash = await bcrypt.compare( req.body.password, user.password);
 
-    if(!hash) return res.status(400).send( "El email o password no coinciden");
+    if(!hash) return res.status(400).send( "Email or password not match");
 
     const jwtToken = user.generateJWT();
 

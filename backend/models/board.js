@@ -1,4 +1,4 @@
-//* Libraries
+//* Modules
 const mongoose = require("mongoose");
 
 //* Schema
