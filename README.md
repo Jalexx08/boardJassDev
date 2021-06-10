@@ -5,6 +5,9 @@ Creating a server ExpressJs and MongoDB
 ## Tecnologies
 
 * Nodejs 
+* Angular
+* Bootstrap
+* Angulr Material
 * Postman
 * MongoDB/MongoDB Compass
 ## Libraries
