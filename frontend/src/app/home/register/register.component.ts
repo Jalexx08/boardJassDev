@@ -43,21 +43,28 @@ export class RegisterComponent implements OnInit {
 
     } else {
       this.auth.registerUser(this.registerData).subscribe(
-        (res) => {
+        (res: any) => {
           console.log(res);
-          this.successMsg = 'Register user successful';
-          this.closeAlert();
+          localStorage.setItem('token', res.jwtToken);
           this.registerData = {};
+          this.router.navigate(['./saveTask'])
+          // this.successMsg = 'Register user successful';
+          // this.closeAlert();
+          // this.registerData = {};
 
         },
         (err) => {
           console.log(err);
           this.errorMsg = err.error.text;
+          this.registerData = {};
+          this.closeX();
         }
       )
 
     }
   }
+
+
 
   closeAlert() {
     setTimeout(() => {
