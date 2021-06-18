@@ -1,9 +1,20 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoardService {
 
-  constructor() { }
+  private env: String;
+
+  constructor(private http: HttpClient) {
+
+    this.env = environment.APP_URL;
+  }
+
+  saveTask(board: any) {
+    return this.http.post<any>(this.env + 'board/saveTask', board);
+  }
 }

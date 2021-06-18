@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { BoardService } from '../../services/board.service';
 
 @Component({
   selector: 'app-save-task',
@@ -10,14 +12,39 @@ export class SaveTaskComponent implements OnInit {
   public taskData: any;
   public errorMsg: String;
 
-  constructor() {
+  constructor( private boardService: BoardService, private router: Router) {
     this.taskData = {};
     this.errorMsg = '';
   }
 
   ngOnInit(): void {
   }
-  saveTask() { }
+
+  saveTask() {
+    if (!this.taskData.name || !this.taskData.description) {
+      console.log('Incomplete data');
+      this.errorMsg = 'Incomplete data';
+      this.closeAlert();
+
+    } else {
+      this.boardService.saveTask(this.taskData).subscribe(
+        (res: any) => {
+          console.log(res);
+          localStorage.setItem('token', res.jwtToken);
+          this.taskData = {};
+          this.router.navigate(['/listTask']);
+
+        },
+        (err) => {
+
+          console.log(err);
+          this.errorMsg = err.error;
+          this.closeAlert();
+
+        }
+      );
+    }
+  }
 
   closeAlert() {
     setTimeout(() => {
