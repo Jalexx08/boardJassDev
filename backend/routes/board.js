@@ -70,8 +70,7 @@ router.post("/saveTask", Auth, UserAuth, async (req, res) => {
 //* Get all of the user's activities
 router.get("/listTask", Auth, UserAuth, async (req, res) => {
 	const validId = mongoose.Types.ObjectId.isValid(req.user._id);
-	console.log(req.user._id);
-	
+
 	if (!validId) return res.status(400).send("This Id is not valid");
 	const board = await Board.find({ userId: req.user._id });
 	return res.status(200).send({ board });
@@ -108,13 +107,13 @@ router.put("/updateTask", Auth, UserAuth, async (req, res) => {
 });
 
 //*  Delete  user's activities
-router.delete("/:_id", Auth, UserAuth, async (req, res) => {
-	const validId = mongoose.Types.ObjectId.isValid(req.body._id);
+router.delete("/deleteTask/:_id", Auth, UserAuth, async (req, res) => {
+	const validId = mongoose.Types.ObjectId.isValid(req.params._id);
 	if (!validId) return res.status(400).send("This Id is not valid");
 
 	const board = await Board.findByIdAndDelete(req.params._id);
 	if (!board)
 		return res.status(401).send("No task to delete");
 
-	return res.status(200).send("Deleted task");
+	return res.status(200).send({ msg: "Deleted task"});
 });

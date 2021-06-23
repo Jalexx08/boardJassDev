@@ -27,6 +27,6 @@ export class BoardService {
   }
   
   deleteTask(board: any) {
-    return this.http.delete<any>(this.env + 'board/updateTask/' + board._id);
+    return this.http.delete<any>(this.env + 'board/deleteTask/' + board._id);
   }
 }

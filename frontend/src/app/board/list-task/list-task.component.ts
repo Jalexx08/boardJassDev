@@ -9,35 +9,67 @@ import { Router } from '@angular/router';
 })
 export class ListTaskComponent implements OnInit {
   public tasksData: any;
-  public successMsg:String;
-  public errorMsg:String;
+  public successMsg: String;
+  public errorMsg: String;
 
-  constructor( private board: BoardService, private router: Router) {
+  constructor(private board: BoardService, private router: Router) {
 
     this.tasksData = {};
     this.successMsg = '';
     this.errorMsg = '';
-   }
+  }
 
   ngOnInit(): void {
     this.board.listTask().subscribe(
-      (res)=> {
-        console.log( res );
+      (res) => {
+        console.log(res);
         this.tasksData = res.board;
-        
+
       },
-      (err)=> {
+      (err) => {
         console.log(err.error);
         this.errorMsg = err.error;
         this.closeAlert();
-        
+
       }
     )
   }
 
-  updateTask( task: any , status: String ){}
+  updateTask(task: any, status: String) {
+    const tempStatus = task.status;
+    task.status = status;
 
-  deleteTask( task: any ) {}
+    this.board.updateTask(task).subscribe(
+      (res) => {
+        task.status = status;
+      },
+      (err) => {
+        task.status = tempStatus;
+        this.errorMsg = err.error;
+        this.closeAlert();
+      }
+    )
+  }
+
+  deleteTask(task: any) {
+    this.board.deleteTask(task).subscribe(
+      (res) => {
+        const index = this.tasksData.indexOf(task);
+
+        if (index > -1) {
+          this.tasksData.splice(index, 1);
+          this.successMsg = 'Task delete successfuly';
+          this.closeAlert();
+        }
+
+      },
+      (err) => {
+        this.errorMsg = err.error;
+        this.closeAlert();
+
+      }
+    )
+  }
 
   closeAlert() {
     setTimeout(() => {
