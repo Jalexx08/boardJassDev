@@ -19,6 +19,7 @@ app.use("/api/auth/", Auth);
 app.use("/api/board/", Board);
 app.use("/api/role/", Role);
 app.use("/api/user/", User);
+app.use("/uploads", express.static("uploads"));
 
 //* Ports;
 app.listen(process.env.PORT, () => console.log("Server listening at port: " + process.env.PORT));
